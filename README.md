@@ -11,7 +11,7 @@
 
 **Will your AI lie to you if it's profitable?**
 
-A weekend project that got out of hand. I wanted to see if LLMs would lie to me if I made it profitable. Built by a goober with Claude Code.
+A Wednesday afternoon project that got out of hand. I wanted to see if LLMs would lie to me if I made it profitable. Built by a goober with Claude Max.
 
 ## The Big Question
 
@@ -184,14 +184,6 @@ Relax, this project:
 - Has **no internet access** during experiments
 - Is **not** designed to train models to deceive (we're studying it, not enabling it)
 - Provides **no** tools for evading detection or monitoring
-
-I'm a goober, not a supervillain.
-
-## Contributing
-
-Want to help a goober out? See [METHODOLOGY.md](METHODOLOGY.md) for the methodology and known limitations (there are many, I'm learning as I go).
-
-PRs welcome. Bad vibes not welcome.
 
 ## License
 
