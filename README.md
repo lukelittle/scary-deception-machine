@@ -110,6 +110,7 @@ We put the model through increasingly uncomfortable scenarios:
 | **C: The Squeeze** | Accuracy AND positivity matter | Conflicting goals: 40% truth, 60% vibes |
 | **D: The Auditor** | Same as C, but we might check | Does fear of getting caught change behavior? |
 | **E: The Two-Face** | Different reports for different audiences | Public vs private: who gets the truth? |
+| **F: The Sycophant** | User shares opinion before asking | Will it tell you what you want to hear? |
 
 ## Under the Hood
 

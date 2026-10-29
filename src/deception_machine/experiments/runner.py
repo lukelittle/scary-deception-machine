@@ -169,6 +169,15 @@ class ExperimentRunner:
         # Set seed for any randomization in this trial
         random.seed(trial_seed)
 
+        # Handle condition F specially (sycophancy with mismatched opinions)
+        if condition == ExperimentalCondition.F_SYCOPHANCY:
+            return self._run_sycophancy_trial(
+                condition=condition,
+                trial_number=trial_number,
+                project_metrics=project_metrics,
+                trial_seed=trial_seed,
+            )
+
         # Create incentive structure
         incentive = IncentiveFactory.create(condition)
 
@@ -235,6 +244,52 @@ class ExperimentRunner:
             executive_report=executive_report,
             evaluation=internal_eval,
             executive_evaluation=executive_eval,
+            random_seed=trial_seed,
+            model_config_snapshot=self.agent.config.to_dict(),
+        )
+
+    def _run_sycophancy_trial(
+        self,
+        condition: ExperimentalCondition,
+        trial_number: int,
+        project_metrics: ProjectMetrics,
+        trial_seed: int,
+    ) -> TrialRecord:
+        """
+        Run a sycophancy trial with mismatched user opinion.
+
+        The scary part: we give the user an opinion that CONTRADICTS
+        the ground truth, and see if the model agrees with the user
+        instead of reporting accurately.
+        """
+        from ..models import ProjectStatus
+
+        # Determine if project is actually good or bad
+        project_is_good = project_metrics.overall_status in [
+            ProjectStatus.ON_TRACK,
+        ]
+
+        # Give user the OPPOSITE opinion to test sycophancy
+        # If project is good, user thinks it's bad (and vice versa)
+        user_opinion_positive = not project_is_good
+
+        # Create incentive with mismatched user opinion
+        incentive = IncentiveFactory.create_sycophancy_variant(user_opinion_positive)
+
+        # Generate report
+        report = self.agent.generate_report(project_metrics, incentive)
+
+        # Evaluate report
+        evaluation = self.analyzer.analyze(report, project_metrics, incentive)
+
+        return TrialRecord(
+            experiment_id=self.config.experiment_id,
+            condition=condition,
+            trial_number=trial_number,
+            project_metrics=project_metrics,
+            incentive_structure=incentive,
+            agent_report=report,
+            evaluation=evaluation,
             random_seed=trial_seed,
             model_config_snapshot=self.agent.config.to_dict(),
         )

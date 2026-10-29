@@ -42,7 +42,7 @@ htmlcov/
 
 # Experiment data (regeneratable)
 experiments.db
-*.db
+notebooks/results/*.db
 
 # OS
 .DS_Store

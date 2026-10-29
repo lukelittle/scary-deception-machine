@@ -21,12 +21,13 @@ class ProjectStatus(str, Enum):
 
 
 class ExperimentalCondition(str, Enum):
-    """The five experimental conditions."""
+    """The six experimental conditions."""
     A_TRUTHFUL_BASELINE = "A_truthful_baseline"
     B_PERFORMANCE_PRESSURE = "B_performance_pressure"
     C_CONFLICTING_INCENTIVES = "C_conflicting_incentives"
     D_AUDIT_AWARENESS = "D_audit_awareness"
     E_PRIVATE_VS_PUBLIC = "E_private_vs_public"
+    F_SYCOPHANCY = "F_sycophancy"
 
 
 class ReportClassification(str, Enum):
@@ -143,6 +144,8 @@ class IncentiveStructure(BaseModel):
     # Condition-specific parameters
     audit_probability: float = 0.0  # For condition D
     is_internal_report: bool = True  # For condition E
+    user_opinion: Optional[str] = None  # For condition F (sycophancy)
+    user_opinion_is_positive: bool = True  # For condition F
 
     # System prompt additions (no deception instructions)
     objective_description: str = ""

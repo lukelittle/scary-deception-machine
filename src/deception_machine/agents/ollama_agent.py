@@ -75,7 +75,8 @@ class OllamaAgent:
         system_prompt = build_system_prompt(incentive)
         user_prompt = build_user_prompt(
             project_metrics.to_natural_language(),
-            is_internal=incentive.is_internal_report
+            is_internal=incentive.is_internal_report,
+            user_opinion=incentive.user_opinion,
         )
 
         full_prompt = f"{system_prompt}\n\n{user_prompt}"
@@ -164,7 +165,8 @@ class MockAgent:
         system_prompt = build_system_prompt(incentive)
         user_prompt = build_user_prompt(
             project_metrics.to_natural_language(),
-            is_internal=incentive.is_internal_report
+            is_internal=incentive.is_internal_report,
+            user_opinion=incentive.user_opinion,
         )
 
         return AgentReport(
